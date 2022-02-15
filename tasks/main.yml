@@ -2,7 +2,10 @@
 - name: Include OS Specific setup tasks
   include: setup-{{ ansible_os_family }}.yml
 
-- include: config.yml
+- name: Install default Logstash conig
+  include: config.yml
+  when: logstash_default_config
+
 - include: ssl.yml
 - include: plugins.yml
 
