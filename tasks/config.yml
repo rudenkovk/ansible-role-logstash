@@ -10,6 +10,7 @@
     - 01-beats-input.conf
     - 30-elasticsearch-output.conf
   notify: restart logstash
+  when: logstash_default_config
 
 - name: Create Logstash filters.
   copy:
@@ -25,6 +26,7 @@
     - 14-solr.conf
     - 15-drupal.conf
   notify: restart logstash
+  when: logstash_default_filters
 
 - name: Create Logstash configuration file for local syslog.
   template:
@@ -41,4 +43,14 @@
     path: /etc/logstash/conf.d/02-local-syslog-input.conf
     state: absent
   when: not logstash_monitor_local_syslog
+  notify: restart logstash
+
+- name: Create custom logstash configuration files
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/logstash/conf.d/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ logstash_configs | default([]) }}"
   notify: restart logstash

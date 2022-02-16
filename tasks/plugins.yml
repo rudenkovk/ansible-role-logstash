@@ -13,3 +13,15 @@
   with_items: "{{ logstash_install_plugins }}"
   when: "item not in logstash_plugins_list.stdout"
   notify: restart logstash
+
+- name: Download OpenSearch output plugin
+  get_url:
+    url: "{{ logstash_opensearch_plugin_url }}"
+    dest: "/tmp/{{ logstash_opensearch_plugin_name }}"
+
+- name: Install OpenSearch output plugin
+  command: >
+    ./bin/logstash-plugin install /tmp/{{ logstash_opensearch_plugin_name }}
+    chdir={{ logstash_dir }}
+#  when: "item not in logstash_plugins_list.stdout"
+  notify: restart logstash

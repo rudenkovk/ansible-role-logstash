@@ -19,9 +19,15 @@ logstash_ssl_key_file: ""
 
 logstash_enabled_on_boot: true
 
-
 logstash_default_config: true
+logstash_default_filters: true
+logstash_opensearch_plugin_version: 1.2.0
+logstash_opensearch_plugin_name: "logstash-output-opensearch-{{ logstash_opensearch_plugin_version }}-java.gem"
+logstash_opensearch_plugin_url: "https://github.com/opensearch-project/logstash-output-opensearch/releases/download/{{ logstash_opensearch_plugin_version }}/{{ logstash_opensearch_plugin_name }}"
+
 
 logstash_install_plugins:
   - logstash-input-beats
   - logstash-filter-multiline
+
+logstash_configs: []
