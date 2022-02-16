@@ -23,5 +23,5 @@
   command: >
     ./bin/logstash-plugin install /tmp/{{ logstash_opensearch_plugin_name }}
     chdir={{ logstash_dir }}
-#  when: "item not in logstash_plugins_list.stdout"
+  when: "'logstash-output-opensearch' not in logstash_plugins_list.stdout"
   notify: restart logstash
