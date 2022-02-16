@@ -47,7 +47,7 @@
 
 - name: Create custom logstash configuration files
   template:
-    src: "{{ item }}.j2"
+    src: "{{ item }}.conf.j2"
     dest: "/etc/logstash/conf.d/{{ item }}"
     owner: root
     group: root
