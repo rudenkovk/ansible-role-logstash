@@ -18,6 +18,7 @@
   get_url:
     url: "{{ logstash_opensearch_plugin_url }}"
     dest: "/tmp/{{ logstash_opensearch_plugin_name }}"
+  when: "'logstash-output-opensearch' not in logstash_plugins_list.stdout"
 
 - name: Install OpenSearch output plugin
   command: >
